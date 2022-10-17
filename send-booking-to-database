@@ -1,0 +1,23 @@
+// this code is on the confirmation page, rather than the page with the booking form
+$con = mysqli_connect("localhost", "root", "", "sunset_resort");
+
+// notify user if there is a connection error
+if (mysqli_connect_errno())
+{
+    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+}
+
+// request form entries and assign them to variables
+$value1 = $_REQUEST["entry1"]; // substitute entries with input names in booking form
+$value2 = $_REQUEST["entry2"];
+$value3 = $_REQUEST["entry3"];
+$value4 = $_REQUEST["entry4"];
+$value5 = $_REQUEST["entry5"];
+
+// inserts booking information into database
+$insert = $con->prepare("INSERT INTO table ($value1, $value2, $value3, $value4, $value5) VALUES (?, ?, ?, ?, ?)"); // do not substitute question marks, they are meant to be there
+$insert -> bind_param('sssss', $value1, $value2, $value3, $value4, $value5);
+$insert -> execute();
+
+// success message including details of booking and customer
+echo "<h1>Thanks!</h1>;
